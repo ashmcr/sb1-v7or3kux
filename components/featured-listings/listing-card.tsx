@@ -25,32 +25,32 @@ export function ListingCard({
   onFavoriteClick,
 }: ListingCardProps) {
   return (
-    <Card className="overflow-hidden">
-      <div className="relative aspect-square">
-        <Image
-          src={imageUrl}
-          alt={title}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 right-2 bg-background/50 backdrop-blur-sm hover:bg-background/75"
-          onClick={onFavoriteClick}
-        >
-          <Heart className={`h-5 w-5 ${isFavorited ? 'fill-current' : ''}`} />
-        </Button>
-      </div>
-      <CardContent className="p-4">
-        <Link href={`/listings/${id}`}>
+    <Link href={`/listings/${id}`} className="block">
+      <Card className="overflow-hidden">
+        <div className="relative aspect-square">
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 bg-background/50 backdrop-blur-sm hover:bg-background/75"
+            onClick={onFavoriteClick}
+          >
+            <Heart className={`h-5 w-5 ${isFavorited ? 'fill-current' : ''}`} />
+          </Button>
+        </div>
+        <CardContent className="p-4">
           <h3 className="font-semibold hover:underline">{title}</h3>
-        </Link>
-        <Badge variant="secondary" className="mt-2">
-          {category}
-        </Badge>
-      </CardContent>
-    </Card>
+          <Badge variant="secondary" className="mt-2">
+            {category}
+          </Badge>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }

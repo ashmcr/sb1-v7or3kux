@@ -9,7 +9,7 @@ export const metadata = {
   description: 'Discover independent creative businesses in Glasgow.',
 };
 
-export default function ListingsPage() {
+const ListingsPage = () => {
   return (
     <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,3 +32,6 @@ export default function ListingsPage() {
       </div>
     </div>
   );
+}
+
+export default ListingsPage;

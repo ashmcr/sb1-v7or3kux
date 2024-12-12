@@ -4,34 +4,34 @@ import { useCallback, useState } from 'react';
 import useSWR from 'swr';
 import { getListings, getGuides, ListingsParams, GuidesParams } from './client';
 import type { Listing, Guide } from './types';
+import { fetcher } from '@/lib/api/fetcher';
 
 const swrConfig = {
   revalidateOnFocus: false,
   shouldRetryOnError: false,
 };
 
-export function useListings(initialParams: ListingsParams = {}) {
+export function useListings(initialParams: ListingsParams) {
   const [params, setParams] = useState(initialParams);
 
   const { data, error, isLoading, mutate } = useSWR(
-    [`/listings`, params],
-    () => getListings(params),
-    swrConfig
+    `/listings?${new URLSearchParams({
+      per_page: params.per_page?.toString() || '12',
+      page: params.page?.toString() || '1'
+    })}`,
+    fetcher
   );
 
-  const updateParams = useCallback((newParams: Partial<ListingsParams>) => {
-    setParams((prev) => ({ ...prev, ...newParams }));
-  }, []);
-
-  if (error) {
-    throw error;
-  }
+  const updateParams = (newParams: Partial<ListingsParams>) => {
+    setParams(prev => ({ ...prev, ...newParams }));
+  };
 
   return {
-    listings: data?.data ?? [],
+    listings: data?.listings ?? [],
     total: data?.total ?? 0,
-    totalPages: data?.total_pages ?? 0,
+    totalPages: data?.totalPages ?? 0,
     isLoading,
+    error,
     mutate,
     params,
     updateParams,
